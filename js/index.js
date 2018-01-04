@@ -65,4 +65,72 @@ window.onload=function () {
             flag=true;
         })
     })
+
+
+    let sou=document.querySelector(".sou_top");
+    let btns=document.querySelectorAll(".t_ul_li");
+    let lou=document.querySelectorAll(".xyhbox");
+    let hz=document.querySelector(".tiao");
+    let span=document.querySelectorAll(".t_ul_li span");
+    console.log(span);
+    window.onscroll=function(){
+            let st=document.documentElement.scrollTop;
+            if (st>500){
+                sou.style.display="block";
+            }else{
+                sou.style.display="none";
+            }
+            if(st>600){
+                hz.style.display="block";
+            }else{
+                hz.style.display="none"
+            }
+            lou.forEach(function (ele,index) {
+                if(st>ele.offsetTop-150){
+                    for(var i=0;i<btns.length;i++){
+                        // btns[i].classList.remove("active");
+                        span[i].style.display="none";
+                    }
+                    // btns[index].classList.add("active");
+                    span[index].style.display="block";
+                }
+
+            })
+            let totop=document.querySelector(".blak");
+            totop.onclick=function () {
+                let st=document.documentElement.scrollTop;
+                let speed=st*30/500;
+                let t=setInterval(function () {
+                    st-=speed;
+                    if(st<=0){
+                        st=0;
+                        clearInterval(t);
+                    }
+                    document.documentElement.scrollTop=st;
+                },20);
+
+            };
+
+            btns.forEach(function (ele,index) {
+                ele.onclick=function(){
+                    let ot=lou[index].offsetTop;
+                    let now=document.documentElement.scrollTop;
+                    console.log(ot,now);
+                    let speed=(ot-now)*30/300;
+                    let item=0;
+                    let t=setInterval(function(){
+                        now+=speed;
+                        item+=30;
+                        if (item===300){
+                            clearInterval(t);
+                            now=ot;
+                        }
+                        document.documentElement.scrollTop=now-50;
+                    },30)
+
+                }
+            })
+
+        }
+
 }
